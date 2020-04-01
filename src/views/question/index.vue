@@ -14,7 +14,7 @@
               <el-form-item label="试题类型">
                 <el-select v-model="searchForm.questionType" placeholder="请选类型" @change="find">
                   <el-option label="全部" value=""></el-option>
-                  <el-option label="单选题" value="ingle_selection"></el-option>
+                  <el-option label="单选题" value="ingle_selections"></el-option>
                   <el-option label="多选题" value="multiple_selection"></el-option>
                   <el-option label="判断题" value="judge"></el-option>
                   <!--<el-option label="填空题" value="4"></el-option>-->
@@ -22,7 +22,7 @@
                 </el-select>
               </el-form-item>
               <el-form-item>
-                <el-button type="primary">查询</el-button>
+                <el-button type="primary" @click="find">查询</el-button>
               </el-form-item>
             </el-form>
           </div>
@@ -195,7 +195,7 @@
         </el-form-item>
         <el-form-item label="类型" :label-width="formLabelWidth" prop="questionType">
           <el-select v-model="dialogObj.form.questionType" placeholder="请选类型" @change="handleChangeType">
-            <el-option label="单选题" value="ingle_selection"></el-option>
+            <el-option label="单选题" value="ingle_selections"></el-option>
             <el-option label="多选题" value="multiple_selection"></el-option>
             <el-option label="判断题" value="judge"></el-option>
             <!--<el-option label="填空题" value="4"></el-option>-->
@@ -203,13 +203,13 @@
           </el-select>
         </el-form-item>
         <!-- 单选题 多选题 -->
-        <el-form-item label="A" :label-width="formLabelWidth" prop="A" v-show="this.dialogObj.form.questionType === 'ingle_selection' || this.dialogObj.form.questionType === 'multiple_selection'">
+        <el-form-item label="A" :label-width="formLabelWidth" prop="A" v-show="this.dialogObj.form.questionType === 'ingle_selections' || this.dialogObj.form.questionType === 'multiple_selection'">
           <el-input v-model="dialogObj.form.A" autocomplete="off" placeholder="请输入A的内容"></el-input>
         </el-form-item>
-        <el-form-item label="B" :label-width="formLabelWidth" prop="B" v-show="this.dialogObj.form.questionType === 'ingle_selection' || this.dialogObj.form.questionType === 'multiple_selection'">
+        <el-form-item label="B" :label-width="formLabelWidth" prop="B" v-show="this.dialogObj.form.questionType === 'ingle_selections' || this.dialogObj.form.questionType === 'multiple_selection'">
           <el-input v-model="dialogObj.form.B" autocomplete="off" placeholder="请输入B的内容"></el-input>
         </el-form-item>
-        <el-form-item label="C" :label-width="formLabelWidth" prop="C" v-show="this.dialogObj.form.questionType === 'ingle_selection' || this.dialogObj.form.questionType === 'multiple_selection'">
+        <el-form-item label="C" :label-width="formLabelWidth" prop="C" v-show="this.dialogObj.form.questionType === 'ingle_selections' || this.dialogObj.form.questionType === 'multiple_selection'">
           <el-input v-model="dialogObj.form.C" autocomplete="off" placeholder="请输入C的内容"></el-input>
         </el-form-item>
 
@@ -264,12 +264,12 @@ export default {
           ],
           answer: [
             { required: true, validator: rules.str, message: '请输入答案', trigger: 'blur' }
-          ],
+          ]
         },
         form: {
           questionContent: '',
           score: '',
-          questionType: 'ingle_selection',
+          questionType: 'ingle_selections',
           A: '',
           B: '',
           C: '',
@@ -282,9 +282,7 @@ export default {
       },
       query: {
         page: 1,
-        limit: 10,
-        questionContent: '',
-        questionType: ''
+        limit: 10
 
       },
       tableData: []
@@ -311,7 +309,7 @@ export default {
       })
     },
     handleChangeType () {
-      if (this.dialogObj.form.questionType === 'ingle_selection' || this.dialogObj.form.questionType === 'multiple_selection') {
+      if (this.dialogObj.form.questionType === 'ingle_selections' || this.dialogObj.form.questionType === 'multiple_selection') {
         this.dialogObj.rules = {
           questionContent: [
             { required: true, validator: rules.str, message: '请输入姓名', trigger: 'blur' }
@@ -333,7 +331,7 @@ export default {
           ],
           answer: [
             { required: true, validator: rules.str, message: '请输入答案', trigger: 'blur' }
-          ],
+          ]
         }
       } else {
         this.dialogObj.rules = {
@@ -348,20 +346,20 @@ export default {
           ],
           answer: [
             { required: true, validator: rules.str, message: '请输入答案', trigger: 'blur' }
-          ],
+          ]
         }
       }
     },
     submitForm () {
-      this.$refs['form'].validate((valid) => {
+      this.$refs.form.validate((valid) => {
         if (valid) {
           console.log(this.dialogObj.form)
-          let query = {
+          const query = {
             question_content: this.dialogObj.form.questionContent,
             answer: this.dialogObj.form.answer,
             a: this.dialogObj.form.A,
             b: this.dialogObj.form.B,
-            c: this.dialogObj.form.C,
+            c: this.dialogObj.form.C
           }
           item_list(query, 'POST').then(res => {
             if (res.code === 0) {
@@ -370,10 +368,10 @@ export default {
           })
           this.dialogObj.isShow = false
         } else {
-          console.log('error submit!!');
-          return false;
+          console.log('error submit!!')
+          return false
         }
-      });
+      })
     },
     find () {
       this.getData()
@@ -390,7 +388,7 @@ export default {
           this.tableData = res.data
         }
       })
-    },
+    }
   },
   mounted () {
     this.$nextTick(() => {

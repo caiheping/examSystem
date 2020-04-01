@@ -126,7 +126,7 @@ export default {
         {
           username: 'test',
           age: '19',
-          sex: '女',
+          sex: '女'
         }
       ]
     }
@@ -144,15 +144,15 @@ export default {
       console.log(row)
     },
     submitForm () {
-      this.$refs['form'].validate((valid) => {
+      this.$refs.form.validate((valid) => {
         if (valid) {
-          alert('submit!');
+          alert('submit!')
           this.dialogObj.isShow = false
         } else {
-          console.log('error submit!!');
-          return false;
+          console.log('error submit!!')
+          return false
         }
-      });
+      })
     }
   },
   mounted () {
