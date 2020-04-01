@@ -25,7 +25,9 @@ import {
   PageHeader,
   Tabs,
   TabPane,
-  Dialog
+  Dialog,
+  Radio,
+  RadioGroup
 } from 'element-ui'
 
 import ScrollBar from 'element-ui/lib/scrollbar'
@@ -60,5 +62,7 @@ export default {
     V.use(Tabs)
     V.use(TabPane)
     V.use(Dialog)
+    V.use(Radio)
+    V.use(RadioGroup)
   }
 }
