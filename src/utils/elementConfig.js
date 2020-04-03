@@ -27,7 +27,9 @@ import {
   TabPane,
   Dialog,
   Radio,
-  RadioGroup
+  RadioGroup,
+  CheckboxGroup,
+  Checkbox
 } from 'element-ui'
 
 import ScrollBar from 'element-ui/lib/scrollbar'
@@ -64,5 +66,7 @@ export default {
     V.use(Dialog)
     V.use(Radio)
     V.use(RadioGroup)
+    V.use(CheckboxGroup)
+    V.use(Checkbox)
   }
 }

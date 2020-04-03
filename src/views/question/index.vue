@@ -4,7 +4,7 @@
       <div class="addOption">
         <el-button type="primary" @click="dialogObj.isShow = true" v-permission="'addQuestion'">新增</el-button>
       </div>
-      <el-tabs v-model="activeName" @tab-click="handleClick">
+      <el-tabs v-model="activeName" @tab-click="changeTab">
         <el-tab-pane label="已审批" name="first">
           <div class="form">
             <el-form :inline="true" :model="searchForm">
@@ -79,7 +79,7 @@
                 align="center">
                 <template slot-scope="scope">
                   <!--<span v-permission="'editQuestion'" class="btn edit" type="text" size="small">编辑</span>-->
-                  <span v-permission="'delQuestion'" class="btn del" @click="handleClick(scope.row)" type="text" size="small">删除</span>
+                  <span v-permission="'delQuestion'" class="btn del" @click="del(scope.row)" type="text" size="small">删除</span>
                 </template>
               </el-table-column>
             </el-table>
@@ -161,7 +161,7 @@
                 <template slot-scope="scope">
                   <!--<span v-permission="'editQuestion'" class="btn edit" type="text" size="small">编辑</span>-->
                   <span v-permission="'approvalQuestion'" class="btn default" type="text" size="small">审批</span>
-                  <span v-permission="'delQuestion'" class="btn del" @click="handleClick(scope.row)" type="text" size="small">删除</span>
+                  <span v-permission="'delQuestion'" class="btn del" @click="del(scope.row)" type="text" size="small">删除</span>
                 </template>
               </el-table-column>
             </el-table>
@@ -299,7 +299,10 @@ export default {
     handleCurrentChange (val) {
 
     },
-    handleClick (row) {
+    changeTab () {
+      console.log(this.activeName)
+    },
+    del (row) {
       console.log(row)
       item_list({
         id_list: row.id

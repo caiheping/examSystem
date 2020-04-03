@@ -28,11 +28,11 @@
             <span class="index">{{item}}</span>
             <h4>(1分)在生产管理信息系统中，下列操作步骤能正确将工单推进流程的是（ ）</h4>
             <div class="item-content">
-              <el-radio-group v-model="radio">
-                <el-radio :label="'A'">A. 在工具栏中点击“workflow”标签</el-radio>
-                <el-radio :label="'B'">B. 在缺陷单界面中点击“推进流程”按钮</el-radio>
-                <el-radio :label="'C'">C. 在缺陷单界面中点击“提交”按钮</el-radio>
-              </el-radio-group>
+              <el-checkbox-group v-model="checkList">
+                <el-checkbox :label="'A'">A. 在工具栏中点击“workflow”标签</el-checkbox>
+                <el-checkbox :label="'B'">B. 在缺陷单界面中点击“推进流程”按钮</el-checkbox>
+                <el-checkbox :label="'C'">C. 在缺陷单界面中点击“提交”按钮</el-checkbox>
+              </el-checkbox-group>
             </div>
           </li>
         </ul>
@@ -84,6 +84,7 @@ export default {
     return {
       right_top: '0',
       radio: 'A',
+      checkList: ['A','B'],
       time: '00:00:00',
       allTime: 4623,
       interval: null
@@ -129,6 +130,10 @@ export default {
 <style lang="scss">
   .exam{
     .el-radio{
+      display: block;
+      margin: 10px 0;
+    }
+    .el-checkbox{
       display: block;
       margin: 10px 0;
     }
