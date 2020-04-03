@@ -99,102 +99,102 @@
 </template>
 
 <script>
-  import ContentBox from '@/components/ContentBox'
-  import { rules } from '../../utils/validate'
-  import { examinee_list } from '../../api/student'
-  export default {
-    components: {
-      ContentBox
-    },
-    data () {
-      return {
-        tableHeight: null,
-        formLabelWidth: '70px',
-        dialogObj: {
-          width: '720px',
-          title: '新增',
-          isShow: false,
-          rules: {
-            username: [
-              { required: true, validator: rules.str, message: '请输入姓名', trigger: 'blur' }
-            ]
-          },
-          form: {
-            username: '',
-            age: '',
-            sex: '男'
-          }
+import ContentBox from '@/components/ContentBox'
+import { rules } from '../../utils/validate'
+import { examinee_list } from '../../api/student'
+export default {
+  components: {
+    ContentBox
+  },
+  data () {
+    return {
+      tableHeight: null,
+      formLabelWidth: '70px',
+      dialogObj: {
+        width: '720px',
+        title: '新增',
+        isShow: false,
+        rules: {
+          username: [
+            { required: true, validator: rules.str, message: '请输入姓名', trigger: 'blur' }
+          ]
         },
-        searchForm: {
-          username: ''
-        },
-        query: {
-          page: 1,
-          limit: 10
-        },
-        tableData: [
-          {
-            username: 'test',
-            age: '12',
-            sex: '男'
-          }
-        ]
-      }
-    },
-    methods: {
-      // 条数改变
-      handleSizeChange (val) {
+        form: {
+          username: '',
+          age: '',
+          sex: '男'
+        }
+      },
+      searchForm: {
+        username: ''
+      },
+      query: {
+        page: 1,
+        limit: 10
+      },
+      tableData: [
+        {
+          username: 'test',
+          age: '12',
+          sex: '男'
+        }
+      ]
+    }
+  },
+  methods: {
+    // 条数改变
+    handleSizeChange (val) {
 
-      },
-      // 页面改变
-      handleCurrentChange (val) {
-
-      },
-      handleClick (row) {
-        console.log(row)
-        examinee_list({
-          id_list: row.id
-        }, 'DELETE').then(res => {
-          if (res.code === 0) {
-            console.log(res)
-          }
-        })
-      },
-      submitForm () {
-        this.$refs['form'].validate((valid) => {
-          if (valid) {
-            alert('submit!');
-            this.dialogObj.isShow = false
-          } else {
-            console.log('error submit!!');
-            return false;
-          }
-        });
-      },
-      find () {
-        this.getData()
-      },
-      getData () {
-        this.query.username = this.searchForm.username ? this.searchForm.username : null
-        examinee_list(this.query, 'GET').then(res => {
-          if (res.code === 0) {
-            console.log(res)
-            this.tableData = res.data
-          }
-        })
-      },
     },
-    mounted () {
-      this.$nextTick(() => {
-        const _this = this
-        this.tableHeight = this.$refs.tableBox.offsetHeight
-        this.getData()
-        window.onresize = function () {
-          _this.tableHeight = _this.$refs.tableBox.offsetHeight
+    // 页面改变
+    handleCurrentChange (val) {
+
+    },
+    handleClick (row) {
+      console.log(row)
+      examinee_list({
+        id_list: row.id
+      }, 'DELETE').then(res => {
+        if (res.code === 0) {
+          console.log(res)
+        }
+      })
+    },
+    submitForm () {
+      this.$refs.form.validate((valid) => {
+        if (valid) {
+          alert('submit!')
+          this.dialogObj.isShow = false
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
+    },
+    find () {
+      this.getData()
+    },
+    getData () {
+      this.query.username = this.searchForm.username ? this.searchForm.username : null
+      examinee_list(this.query, 'GET').then(res => {
+        if (res.code === 0) {
+          console.log(res)
+          this.tableData = res.data
         }
       })
     }
+  },
+  mounted () {
+    this.$nextTick(() => {
+      const _this = this
+      this.tableHeight = this.$refs.tableBox.offsetHeight
+      this.getData()
+      window.onresize = function () {
+        _this.tableHeight = _this.$refs.tableBox.offsetHeight
+      }
+    })
   }
+}
 </script>
 
 <style lang="scss" scoped>

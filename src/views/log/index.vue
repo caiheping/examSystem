@@ -51,47 +51,47 @@
 </template>
 
 <script>
-  import ContentBox from '@/components/ContentBox'
-  import { rules } from '../../utils/validate'
-  export default {
-    components: {
-      ContentBox
-    },
-    data () {
-      return {
-        tableHeight: null,
-        searchForm: {
-          username: ''
-        },
-        tableData: [
-          {
-            username: 'test',
-            date: '2020-01-09',
-            option: '删除xxx用户'
-          }
-        ]
-      }
-    },
-    methods: {
-      // 条数改变
-      handleSizeChange (val) {
-
+import ContentBox from '@/components/ContentBox'
+import { rules } from '../../utils/validate'
+export default {
+  components: {
+    ContentBox
+  },
+  data () {
+    return {
+      tableHeight: null,
+      searchForm: {
+        username: ''
       },
-      // 页面改变
-      handleCurrentChange (val) {
-
-      }
-    },
-    mounted () {
-      this.$nextTick(() => {
-        const _this = this
-        this.tableHeight = this.$refs.tableBox.offsetHeight
-        window.onresize = function () {
-          _this.tableHeight = _this.$refs.tableBox.offsetHeight
+      tableData: [
+        {
+          username: 'test',
+          date: '2020-01-09',
+          option: '删除xxx用户'
         }
-      })
+      ]
     }
+  },
+  methods: {
+    // 条数改变
+    handleSizeChange (val) {
+
+    },
+    // 页面改变
+    handleCurrentChange (val) {
+
+    }
+  },
+  mounted () {
+    this.$nextTick(() => {
+      const _this = this
+      this.tableHeight = this.$refs.tableBox.offsetHeight
+      window.onresize = function () {
+        _this.tableHeight = _this.$refs.tableBox.offsetHeight
+      }
+    })
   }
+}
 </script>
 
 <style lang="scss" scoped>

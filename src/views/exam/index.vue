@@ -87,41 +87,61 @@ export default {
       checkList: ['A','B'],
       time: '00:00:00',
       allTime: 4623,
-      interval: null
+      interval: null,
+      timer: null,
+      scroll_before: 0,
+      scroll_after: 0
     }
   },
   methods: {
     // 格式化时间
-    timeFormat(param) {
-      return param < 10 ? '0' + param : param;
+    timeFormat (param) {
+      return param < 10 ? '0' + param : param
     },
     // 倒计时
-    countDown() {
+    countDown () {
       this.interval = setInterval(() => {
-        let hour = this.timeFormat(Math.floor(this.allTime / 60 / 60)) // 小时
-        let minute = this.timeFormat(Math.floor((this.allTime / 60) - (hour * 60))) // 分钟
-        let second = this.timeFormat(this.allTime % 60) // 秒
-        console.log(hour)
-        console.log(minute)
-        console.log(second)
+        const hour = this.timeFormat(Math.floor(this.allTime / 60 / 60)) // 小时
+        const minute = this.timeFormat(Math.floor((this.allTime / 60) - (hour * 60))) // 分钟
+        const second = this.timeFormat(this.allTime % 60) // 秒
 
         this.time = hour + ':' + minute + ':' + second
         this.allTime--
-        if (second <= 0) {
-          clearInterval(this.interval)
-        }
-      }, 1000);
+      }, 1000)
+    },
+    // 防抖
+    debounce(func, wait) {
+      let timer;
+      return function() {
+        let args = arguments; // arguments中存着e
+
+        if (timer) clearTimeout(timer);
+        timer = setTimeout(() => {
+          func.apply(this, args)
+        }, wait)
+      }
+    },
+    // 滚动结束
+    isScrollEnd() {
+      this.scroll_after = document.documentElement.scrollTop || document.body.scrollTop;
+      if(this.scroll_after == this.scroll_before){
+        this.right_top = window.pageYOffset
+        console.log('滚动结束了')
+      }
     }
   },
   destroyed () {
     clearInterval(this.interval)
   },
   mounted () {
+    let _this = this
     this.$nextTick(() => {
       this.countDown()
-      window.onscroll = () => {
-        this.right_top = window.pageYOffset
-      }
+      window.addEventListener("scroll",_this.debounce(()=>{
+        clearTimeout(_this.timer);
+        _this.timer = setTimeout(_this.isScrollEnd, 300);
+        _this.scroll_before = document.documentElement.scrollTop || document.body.scrollTop
+      },20))
     })
   }
 }
@@ -238,7 +258,7 @@ export default {
       .right{
         width: 280px;
         position: absolute;
-        transition: all .25s;
+        transition: all 1s;
         right: 0;
         transform: translateY(0);
         .log{
